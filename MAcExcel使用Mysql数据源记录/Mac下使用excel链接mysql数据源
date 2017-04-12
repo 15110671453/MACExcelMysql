@@ -1,0 +1,44 @@
+Mac下使用excel链接mysql数据源
+
+http://blog.csdn.net/bokix/article/details/50272419
+本文主要讲如何在 mac 电脑上安装 odbc 驱动，以及安装成功后，如何在 excel 中通过此 odbc 驱动来连接数据库
+
+
+1. 打开 excel，点击“数据”->“新建数据库连接”，根据提示，会跳转到 openlink 的网站让你安装 odbc 驱动，下载地址如下：http://download.openlinksw.com/solwiz/wizard.PHP ， 根据这个向导，一步步选择自己要的驱动类型，电脑的系统类型，mysql 在什么系统上运行的，等等，会出来一个下载地址，下载按钮的旁边会有个 license 按钮，把这个 license 也一起下载了，装的时候会用到。我把我下载好的驱动和 license也放在这里了，需要的可以拿去（如果 License 过期了自己重新申请下）。
+
+openlink odbc connector: http://download.csdn.NET/detail/bokix/9348849
+
+2. 第一步安装好以后，如果你本机装的 Java 是 jdk6以上的版本，会发现打不开，提示你需要安装旧版本的 java，苹果官方jdk1.6地址在这里：https://support.apple.com/kb/dl1572?locale=zh_CN ， 下载后安装，安装完了记得把你的 java_home 变量改一下，在终端里
+
+[plain] view plain copy
+cd ~  
+vi .bash_profile  
+在 bash profile 文件里添加：
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+完了以后保存退出，然后别忘了 source .bash_profile， 然后用 java -version 看看是不是变成1.6版本了
+
+3. 打开第一步安装好的 administrator 工具：
+
+openlink odbc
+
+可以看到 odbc driver 里面已经有了：
+
+
+在 system DSN 里面添加一个，就选第一个好了：
+
+
+
+添加好了以后，选择configure，把你的 mysql 地址、用户名、端口之类的填上去，其他的不用变：
+
+
+
+
+一路 continue，最后结束前别忘了点一下 test data source，如果这个时候提示说找不到 License，先把你下载的 license 拷贝到：/Library/Application\ Support/OpenLink/Licenses 这个目录里（这个目录里其他的 license 删掉好了），然后在 .bash_profile 里面再添加一个环境变量：export OPL_LICENSE_DIR=/Library/Application\ Support/OpenLink/Licenses，同样的，别忘了 source .bash_profile， 然后看看这个 License 有没有在运行：ps -ef | grep oplmgr | grep -v grep ， 如果能看到结果，说明已经运行了，不行的话就重启一下电脑吧，openlink 关于此错误的官方说明在这里：http://wikis.openlinksw.com/dataspace/owiki/wiki/UdaWikiWeb/UnableContactLicenseManager ， 这个页面上还提供了一个 LicenseManager 工具。
+
+
+打开excel，点击“新建数据库查询”， “从数据库”， 选择“System DSN”， 点击 ok，输入你的数据库密码，就能连上了：
+
+ 
+
+
+
