@@ -1,5 +1,7 @@
 Mac下使用excel链接mysql数据源
 
+Mac盒子mysql密码 asd1453NMDmysql
+
 http://blog.csdn.net/bokix/article/details/50272419
 本文主要讲如何在 mac 电脑上安装 odbc 驱动，以及安装成功后，如何在 excel 中通过此 odbc 驱动来连接数据库
 
